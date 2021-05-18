@@ -11,13 +11,12 @@ class WorldTime {
       {this.location, this.flag, this.url}); //location url for api endpoint
 
   Future<void> getTime() async {
-
-    try{
-      Uri createUrl =
-      Uri.https('worldtimeapi.org', '/api/timezone/$url');
+    try {
+      Uri createUrl = Uri.https('worldtimeapi.org', '/api/timezone/$url');
       //make the request
       Response response = await get(createUrl);
       Map data = jsonDecode(response.body);
+      // print(data);
 
       //get properties from data
       String datetime = data['datetime'];
@@ -26,16 +25,14 @@ class WorldTime {
 
       //create DateTime object
       DateTime now = DateTime.parse(datetime);
-      now = now
-          .add(Duration(hours: int.parse(offset1), minutes: int.parse(offset2)));
+      now = now.add(
+          Duration(hours: int.parse(offset1), minutes: int.parse(offset2)));
 
       //set the time property
       time = now.toString();
-    }catch(e){
+    } catch (e) {
       print('caught error: $e');
       time = 'could not get time data';
     }
-
-
   }
 }
